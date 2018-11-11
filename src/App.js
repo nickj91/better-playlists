@@ -20,22 +20,22 @@ let fakeServerData = {
         name: 'Discover Weekly',
         songs: [
           {name: 'Synthwave', duration:1345},
-          {name: 'Chillwave', duration:1688},
+          {name: 'Whatever', duration:1688},
           {name: 'Zeldawave', duration:7000}
         ]
       },
       {
-        name: 'Discover Weekly',
+        name: 'Random Stuff',
         songs: [
           {name: 'Synthwave', duration:1345},
           {name: 'Chillwave', duration:1688},
-          {name: 'Zeldawave', duration:7000}
+          {name: 'Changing', duration:7000}
         ]
       },
       {
-        name: 'Discover Weekly',
+        name: 'New Jams',
         songs: [
-          {name: 'Synthwave', duration:1345},
+          {name: 'WTF', duration:1345},
           {name: 'Chillwave', duration:1688},
           {name: 'Zeldawave', duration:7000}
         ]
@@ -83,11 +83,16 @@ class Filter extends Component {
 
 class Playlist extends Component {
   render() {
+    let playlist = this.props.playlist
     return (
       <div style={{...defaultStyle, display: 'inline-block', width: "25%"}}>
         <img />
-        <h3>Playlist Name</h3>
-        <ul><li>Song 1</li><li>Song 2</li><li>Song 3</li></ul>
+        <h3>{playlist.name}</h3>
+        <ul>
+          {playlist.songs.map(song => 
+           <li>{song.name}</li>
+          )}
+        </ul>
       </div>
     );
   }
@@ -104,6 +109,16 @@ class App extends Component {
     }, 1000);
   }
   render() {
+    
+    let playlistElements = []
+    if(this.state.serverData.user) {
+      for (let i = 0; i < this.state.serverData.user.playlists.length; i++) {
+        let playlist = this.state.serverData.user.playlists[i]
+        playlistElements.push(<Playlist playlist={playlist} />) 
+      }
+    }
+
+
     return (
       <div className="App">
         {this.state.serverData.user ?
@@ -114,10 +129,7 @@ class App extends Component {
           <PlaylistCounter playlists={this.state.serverData.user.playlists}/>
           <HoursCounter playlists={this.state.serverData.user.playlists}/>
           <Filter/>
-          <Playlist/>
-          <Playlist/>
-          <Playlist/>
-          <Playlist/>
+          {playlistElements}
         </div> : <h1>Loading bitch...</h1>
         }
       </div>
