@@ -8,7 +8,7 @@
 }
 
 .App-header {
-  background-color: #000000;
+  background-color: #ffffff;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -29,6 +29,5 @@
 
 h1 {
   font-size: 54px;
-  background-color: black;
-  color: white;
+  background-color: #fff;
 }
